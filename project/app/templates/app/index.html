@@ -1,0 +1,23 @@
+{% extends 'app/layout.html' %}
+
+        
+        {% block content %}
+            {% include 'app/modal.html' %}
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                        <ul>
+                    {% for message in messages %}
+                        <li style="list-style: none; color: red;">{{ message }}</li>
+                    {% endfor %}
+                        </ul>
+                {% endif %}
+            {% endwith %}
+            
+            <a href="#" class="btn btn-primary m-3" id="new-board" data-toggle="modal" data-target="#exampleModal">Create new board</a>
+            <div id="root"></div>
+
+        {% endblock %}
+
+    </body>
+</html>
