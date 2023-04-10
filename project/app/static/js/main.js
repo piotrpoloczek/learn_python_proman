@@ -16,8 +16,6 @@ function init() {
 
     let saveBoardButton = document.querySelector("button#save-board");
     saveBoardButton.addEventListener("click", saveBoard);
-
-
 }
 
 init();

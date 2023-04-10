@@ -36,11 +36,7 @@ DROP TABLE IF EXISTS boards_types;
 CREATE TABLE boards (
     id          SERIAL PRIMARY KEY  NOT NULL,
     title       VARCHAR(200)        NOT NULL,
-<<<<<<< HEAD
-    user_id     INTEGER,  
-=======
     user_id     INTEGER,
->>>>>>> development
     type        INTEGER             NOT NULL default 1           
 );
 
@@ -60,17 +56,10 @@ CREATE TABLE boards (
         password            VARCHAR(255)        NOT NULL);
 
 
-<<<<<<< HEAD
-CREATE TABLE boards_types (
-    id       SERIAL PRIMARY KEY     NOT NULL,
-    title    VARCHAR(200)           NOT NULL
-    );
-=======
 CREATE TABLE board_types (
     id       SERIAL PRIMARY KEY     NOT NULL,
     title    VARCHAR(200)           NOT NULL
 );
->>>>>>> development
 
 ---
 --- insert data
@@ -79,13 +68,9 @@ CREATE TABLE board_types (
 INSERT INTO boards_types(title) VALUES ('public'); 
 INSERT INTO boards_types(title) VALUES ('private');
 
-<<<<<<< HEAD
---  1 - new / 2 - in progress / 3 - testing / 4 - done
-=======
 INSERT INTO board_types(title) VALUES ('public');
 INSERT INTO board_types(title) VALUES ('private');
 
->>>>>>> development
 INSERT INTO statuses(title) VALUES ('new');
 INSERT INTO statuses(title) VALUES ('in progress');
 INSERT INTO statuses(title) VALUES ('testing');

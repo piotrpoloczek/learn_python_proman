@@ -33,9 +33,32 @@ def get_boards():
         """
     )
 
-def get_board(board_id):
-    # remove this code once you implement the database
+def get_statuses():
+    """
+    Gather all statuses
+    :return:
+    """
+    return data_manager.execute_select(
+        """
+        SELECT * FROM statuses
+        ;
+        """
+    )
 
+def get_status(status_id):
+    """
+    """
+    matching_status = data_manager.execute_selecet(
+        """
+        SELECT * FROM statuses
+        WHERE id = %(status_id)s
+        """,
+        {"status_id": status_id})
+    
+    return matching_status
+
+
+def get_board(board_id):
     matching_board = data_manager.execute_select(
         """
         SELECT * FROM boards
@@ -43,6 +66,18 @@ def get_board(board_id):
         ;
         """
         , {"board_id": board_id})
+
+    return matching_board
+
+
+def get_card(card_id):
+    matching_board = data_manager.execute_select(
+        """
+        SELECT * FROM cards
+        WHERE id = %(card_id)s
+        ;
+        """
+        , {"card_id": card_id})
 
     return matching_board
 
@@ -88,8 +123,6 @@ def user_data(email):
         ;
         """
         , {"email": email}, fetchall=None)
-    # print(user_data)
-    # print(user_data['password'])
     return user_data
 
 def add_board(title):
@@ -100,3 +133,12 @@ def add_board(title):
                 values 
                 (%(title)s)"""
                 , {'title': title})
+
+def add_card(board_id, status_id, title, card_order):
+    data_manager.execute_insert( 
+                """
+                INSERT into 
+                cards (board_id, status_id, title, card_order)
+                values 
+                (%(board_id)s, %(status_id)s, %(title)s, %(card_order)s)"""
+                , {'board_id': board_id, 'status_id': status_id, 'title': title, 'card_order': card_order})

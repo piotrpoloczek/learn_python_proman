@@ -67,8 +67,8 @@ function boardBuilder(board) {
     return `
             <div class="card m-3">
                 <h5 class="card-header" data-board-id="${board.id}">${board.title}</h5>
-                <div class="card-body">
-                    <a class="btn btn-primary board-toggle m-2" data-board-id="${board.id}">Show Cards</a>
+                <div class="card-body div-cards" data-board-id="${board.id}">
+                    <button class="btn btn-primary board-toggle m-2" data-board-id="${board.id}">Show Cards</button>
                 </div>
 
                 ` + columnBuilder(board) + `
