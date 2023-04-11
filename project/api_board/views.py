@@ -53,6 +53,11 @@ def get_cards_for_board(board_id: int):
     """
     return queries.get_cards_for_board(board_id)
 
+### example get column
+@api_board_bp.route("/boards/<int:board_id>/column/")
+@api_board_bp.route("/boards/<int:board_id>/column/<int:column_id>/cards/")
+
+
 @api_board_bp.route("/status/<int:status_id>")
 @json_response
 def get_status(status_id: int):
@@ -79,3 +84,5 @@ def create_card():
     card_order = request.get_json()["card_order"]
     queries.add_card(board_id, status_id, title, card_order)
     return data, 201
+
+

@@ -10,9 +10,10 @@ export let cardsManager = {
         const columns = await dataHandler.getStatuses();
         console.log(columns);
         for (let card of cards) {
+            console.log(card.status_id);
             const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
-            domManager.addChild(`.div-cards[data-board-id="${boardId}"]`, content);
+            domManager.addChild(`#div-cards[data-board-id="${boardId}"]`, content);
             domManager.addEventListener(
                 `[data-card-id="${card.id}"]`,
                 "click",
