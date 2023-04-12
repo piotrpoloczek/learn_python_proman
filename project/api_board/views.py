@@ -18,6 +18,7 @@ def get_boards():
     """
     All the boards
     """
+    # return queries.get_everything('boards')
     return queries.get_boards()
 
 @api_board_bp.route("/statuses")
@@ -26,15 +27,15 @@ def get_satatuses():
     """
     All the statuses
     """
+    # return queries.get_everything('satatuses')
     return queries.get_statuses()
 
 @api_board_bp.route("/boards/<int:board_id>/")
 @json_response
 def get_board(board_id: int):
     """
-    All cards that belongs to a board
-    :param board_id: id of the parent board
     """
+    # return queries.get_everything_by_id('boards','board_id',board_id)
     return queries.get_board(board_id)
 
 @api_board_bp.route("/cards/<int:card_id>/")
@@ -42,6 +43,7 @@ def get_board(board_id: int):
 def get_card(card_id: int):
     """
     """
+    # return queries.get_everything_by_id('cards','card_id',card_id)
     return queries.get_card(card_id)
 
 @api_board_bp.route("/boards/<int:board_id>/cards/")
@@ -51,11 +53,30 @@ def get_cards_for_board(board_id: int):
     All cards that belongs to a board
     :param board_id: id of the parent board
     """
+    # return queries.get_everything_by_id('cards','board_id',board_id)
     return queries.get_cards_for_board(board_id)
 
 ### example get column
-@api_board_bp.route("/boards/<int:board_id>/column/")
-@api_board_bp.route("/boards/<int:board_id>/column/<int:column_id>/cards/")
+@api_board_bp.route("/boards/<int:board_id>/columns/")
+@json_response
+def get_columns_for_board(board_id: int):
+    """
+    All columns that belongs to a board
+    :param board_id: id of the parent board
+    """
+    # return queries.get_everything_by_id('columns','board_id',board_id)
+    return queries.get_columns_for_board(board_id)
+
+# @api_board_bp.route("/boards/<int:board_id>/column/<int:column_id>/cards/")
+@api_board_bp.route("/boards/column/<int:column_id>/cards/")
+@json_response
+def get_cards_for_columns(column_id: int):
+    """
+    All cards that belongs to a column
+    :param column_id: id of the parent column
+    """
+    # return queries.get_everything_by_id('cards','column_id',column_id)
+    return queries.get_cards_for_column(column_id)
 
 
 @api_board_bp.route("/status/<int:status_id>")
@@ -63,6 +84,7 @@ def get_cards_for_board(board_id: int):
 def get_status(status_id: int):
     """
     """
+    # return queries.get_everything_by_id('statuses','id',status_id)
     return queries.get_status(status_id)
 
 

@@ -1,30 +1,33 @@
 from util import data_manager
 
+# doesn't work :/ 
+# def get_everything(table_name):
+#     print(table_name)
+#     all_data = data_manager.execute_selecet(
+#         """
+#         SELECT * FROM %(table_name)s
+#         """,
+#         {"table_name": table_name},)
+    
+#     return all_data
 
-def get_card_status(status_id):
-    """
-    Find the first status matching the given id
-    :param status_id:
-    :return: str
-    """
-    status = data_manager.execute_select(
-        """
-        SELECT * FROM statuses s
-        WHERE s.id = %(status_id)s
-        ;
-        """
-        , {"status_id": status_id})
-
-    return status
-
+# def get_everything_by_id(table_name, column_name, id):
+#     """
+#     """
+#     all_data_by_id = data_manager.execute_selecet(
+#         """
+#         SELECT * FROM %(table_name)s
+#         WHERE %(column_name)s = %(id)s
+#         """,
+#         {"table_name": table_name, "column_name": column_name, "id": id})
+    
+#     return all_data_by_id
 
 def get_boards():
     """
     Gather all boards
     :return:
     """
-    # remove this code once you implement the database
-    #return [{"title": "board1", "id": 1}, {"title": "board2", "id": 2}]
 
     return data_manager.execute_select(
         """
@@ -83,16 +86,39 @@ def get_card(card_id):
 
 
 def get_cards_for_board(board_id):
-    # remove this code once you implement the database
-    # return [{"title": "title1", "id": 1}, {"title": "board2", "id": 2}]
 
     matching_cards = data_manager.execute_select(
         """
         SELECT * FROM cards
-        WHERE cards.board_id = %(board_id)s
+        WHERE board_id = %(board_id)s
         ;
         """
         , {"board_id": board_id})
+
+    return matching_cards
+
+
+def get_columns_for_board(board_id):
+
+    matching_columns = data_manager.execute_select(
+        """
+        SELECT * FROM columns
+        WHERE board_id = %(board_id)s
+        ;
+        """
+        , {"board_id": board_id})
+
+    return matching_columns
+
+
+def get_cards_for_column(column_id):
+    matching_cards = data_manager.execute_select(
+        """
+        SELECT * FROM cards
+        WHERE column_id = %(column_id)s
+        ;
+        """
+        , {"column_id": column_id})
 
     return matching_cards
 
@@ -112,7 +138,6 @@ def users_emails():
         """
         SELECT email FROM users
         """)
-    print(users_emails)
     return users_emails
 
 def user_data(email):
