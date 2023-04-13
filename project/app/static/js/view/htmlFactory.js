@@ -24,10 +24,20 @@ export function htmlFactory(template) {
 
 function columnBuilder(column) {
     return `
-                <div class="col-sm-4" data-status-id="${column.id}">
+                <div class="col-sm-4" data-column-id="${column.id}">
                     <div class="card m-2">
-                        <div class="card-body">
-                            <h5 class="card-title">${column.title}</h5>
+                    <div class="row card-header m-0">    
+                        <div class="col-sm-9">
+                            <h5>${column.title}</h5>
+                        </div>
+                            <div class="col-sm-3" data-board-id="${column.id}">
+                                <button class="btn btn-primary" type="button" align="right" data-board-id="${column.id}">
+                                    Add card
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body" data-column-id="${column.id}">
+                            task1
                         </div>
                     </div>
                 </div>
@@ -39,7 +49,7 @@ function boardBuilder(board) {
     return `
             <div class="card m-3">
                 
-                <div class="row card-header">
+                <div class="row card-header m-0">
                     <div class="col-sm-11">
                         <h5  data-board-id="${board.id}">${board.title}</h5>
                     </div>
