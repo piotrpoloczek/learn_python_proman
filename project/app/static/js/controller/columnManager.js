@@ -6,12 +6,11 @@ import {cardsManager} from "./cardsManager.js";
 
 export let columnManager = {
     loadColumn: async function(boardId) {
-        const cards = await dataHandler.getCardsByBoardId(boardId);
-        console.log(cards);
-        for(let card of cards) {
-            console.log(card.status_id);
+        const columns = await dataHandler.getColumnsByBoardId(boardId);
+        console.log(columns);
+        for(let column of columns) {
             const columnBuilder = htmlFactory(htmlTemplates.column);
-            const content = columnBuilder(card);
+            const content = columnBuilder(column);
             domManager.addChild(`#div-cards[data-board-id="${boardId}"]`, content);
         }
     }

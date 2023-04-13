@@ -1,12 +1,13 @@
 export const htmlTemplates = {
     board: 1,
     card: 2,
+    column: 3,
 }
 
 export const builderFunctions = {
     [htmlTemplates.board]: boardBuilder,
     [htmlTemplates.card]: cardBuilder,
-
+    [htmlTemplates.column]: columnBuilder,
 };
 
 export function htmlFactory(template) {
@@ -21,17 +22,18 @@ export function htmlFactory(template) {
     };
 };
 
-function columnBuilder(statusId) {
+function columnBuilder(column) {
     return `
-                <div class="col-sm-3" data-status-id="${statusId}">
+                <div class="col-xs-4 col-sm-6" data-status-id="${column.id}">
                     <div class="card m-2">
                         <div class="card-body">
-                            <h5 class="card-title">New</h5>
+                            <h5 class="card-title">${column.title}</h5>
                         </div>
                     </div>
                 </div>
             `;
 };
+
 
 function boardBuilder(board) {
     return `
@@ -48,8 +50,8 @@ function boardBuilder(board) {
                     </button>
                     </div>
                 </div>
-                <div id="div-cards" data-board-id="${board.id}"></div>
 
+                <div class="container-fluid container testimonial-group"><div class="row flex-nowrap" id="div-cards" data-board-id="${board.id}"></div></div>
             </div>
             `;
 };
