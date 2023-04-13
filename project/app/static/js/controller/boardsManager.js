@@ -32,7 +32,10 @@ export let boardsManager = {
 
 async function showHideButtonHandler(clickEvent) {
     console.log("button clicked");
+    
     const boardId = await clickEvent.currentTarget.dataset.boardId;
+    let divCards = document.querySelector(`#div-cards[data-board-id="${boardId}"]`);
+    divCards.classList.add("height-500");
     console.log(boardId);
     columnManager.loadColumn(boardId);
 }
