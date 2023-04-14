@@ -10,7 +10,7 @@ export let dataHandler = {
         return await apiGet(`/api/boards/${boardId}/columns/`);
     },
     getCardsByColumnId: async function (columnId) {
-        return await apiGet(`/api/boards/${columnId}/cards/`);
+        return await apiGet(`/api/boards/column/${columnId}/cards/`);
     },
     getCard: async function (cardId) {
         // the card is retrieved and then the callback function is called with the card
@@ -30,7 +30,7 @@ async function apiGet(url) {
     let response = await fetch(url, {
         method: "GET",
     });
-    return await response.json();
+    // return await response.json();
     if (response.ok) {
         return await response.json();
     }

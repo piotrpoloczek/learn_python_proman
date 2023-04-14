@@ -16,4 +16,8 @@ export let domManager = {
             console.error("could not find such html element for event listener: " + parentIdentifier);
         }
     },
+    changeBetweenCSSClasses(element, cssClassToRemove, cssClasstoAdd) {
+        element.classList.remove(cssClassToRemove);
+        element.classList.add(cssClasstoAdd);
+    },
 };
