@@ -19,4 +19,8 @@ export let cardsHandler = {
         // delete card
         return await dataCRUD.apiDelete(`/api/boards/columns/cards/${cardId}`);
     },
+    updateColumnIdInCard: async function (cardId, columnId) {
+        // 
+        return await dataCRUD.apiPost(`/api/boards/columns/${columnId}/cards/${cardId}/edit`, {"columnId": columnId});
+    },
 }

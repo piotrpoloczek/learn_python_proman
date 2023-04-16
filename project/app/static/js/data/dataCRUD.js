@@ -19,8 +19,8 @@ export let dataCRUD = {
             'Content-type': 'application/json; charset=UTF-8',
             },
         })
-        .then((response) => response.json())
-        .then((json) => console.log(json));
+        const jsonResponse = await response.json();
+        return jsonResponse;
     },
     apiDelete: async function (url) {
         try {

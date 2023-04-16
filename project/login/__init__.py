@@ -6,7 +6,7 @@ login_bp = Blueprint(
     static_folder="static",
     static_url_path="/login/static",
     template_folder="templates",
-    url_prefix="/login",
+    url_prefix="/login/",
 )
 
 from login import views

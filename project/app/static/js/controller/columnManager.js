@@ -18,7 +18,7 @@ export let columnManager = {
             console.log("columnId: " + column.id)
             await cardsManager.loadCards(column.id)
             domManager.addEventListener(
-                `button#delete-column`,
+                `div.div-button[data-column-id="${column.id}"]`,
                 "click",
                 deleteColumnButton
             )    
@@ -26,13 +26,13 @@ export let columnManager = {
     }
 }
 
-async function deleteColumnButton() {
+async function deleteColumnButton(clickEvent) {
     // var columnId = clickEvent.curentTarget.dataset.columnId
-    var columnId = document.querySelector('.col-sm-4[data-column-id]').getAttribute('data-column-id');//zczytuje cały czas columnId = 1
+    let columnId = await clickEvent.currentTarget.dataset.columnId
     console.log("delete column: "+ columnId)
-    // columnsHandler.deleteColumn(columnId)
+    columnsHandler.deleteColumn(columnId)
 
-
-    domManager.emptyElement('#root');
-    await boardsManager.loadBoards(null)
+    // remove element from board in view
+    let columnElement = document.querySelector(`.col-sm-4[data-column-id="${columnId}"]`)
+    columnElement.remove()
 }

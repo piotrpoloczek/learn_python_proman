@@ -23,12 +23,13 @@
       <li class="nav-item">
         <a class="nav-link" href="{{ url_for('login_bp.logout')}}">Logout</a>
       </li>
+
       {%endif%}
     </ul>
   </div>
   <span class="navbar-text">
     {%if user_name%}
-      You are logged as <p id="user_name" data-user-id="{{user_id}}"]>{{user_name}}</p>
+      You are logged as: <span class="text-primary" id="user_name" data-user-id="{{user_id}}"]>{{user_name}}</span>
     {%endif%}
   </span>
 </nav>

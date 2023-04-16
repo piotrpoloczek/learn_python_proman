@@ -2,6 +2,7 @@ import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
 import {cardsHandler} from "../data/cardsHandler.js";
 import { boardsManager } from "./boardsManager.js";
+import { refreshManager } from "./refreshManager.js";
 
 
 export let cardsManager = {
@@ -9,18 +10,18 @@ export let cardsManager = {
         const cards = await cardsHandler.getCardsByColumnId(columnId)
         console.log(cards);
         for (let card of cards) {
-            const cardBuilder = htmlFactory(htmlTemplates.card);
+            this.loadCard(columnId, card);
+        }
+    },
+    loadCard: async function (columnId, card) {
+        const cardBuilder = htmlFactory(htmlTemplates.card);
             const content = cardBuilder(card);
             domManager.addChild(`div#cards[data-column-id="${columnId}"]`, content);
-            // add event listener to every button
             domManager.addEventListener(
-                `button#delete-button`,
+                `div.div-button[data-card-id="${card.id}"]`,
                 "click",
                 deleteCardButton
             );
-
-            // TODO add event listener in order to rename
-        }
     },
     createCard: async function () {
         console.log("print something modal works")
@@ -30,15 +31,23 @@ export let cardsManager = {
         console.log("text from field: " + title);
         let columnId = document.querySelector('.col-sm-4[data-column-id]').getAttribute('data-column-id');
         console.log("patrz tuuuu" + columnId)
-        cardsHandler.createNewCard(title, columnId);
+        
+        let cardId = cardsHandler.createNewCard(title, columnId)
+        cardId.then(response => console.log(response));
+
+        // get id from request after posting
+        //await cardsHandler.getCard()
+        //this.loadCard(columnId, )
     },
 };
 
-async function deleteCardButton() {
-    var cardId = document.querySelector('.col-sm-3[data-card-id]').getAttribute('data-card-id');
+async function deleteCardButton(clickEvent) {
+    // var cardId = document.querySelector('.card-draggable[data-card-id]').getAttribute('data-card-id');
+    let cardId = await clickEvent.currentTarget.dataset.cardId
     console.log("delete card: "+ cardId)
     cardsHandler.deleteCard(cardId)
 
-    domManager.emptyElement('#root');
-    await boardsManager.loadBoards(null)
+    // remove element from column in view
+    let cardElement = document.querySelector(`.card-draggable[data-card-id="${cardId}"]`)
+    cardElement.remove()
 }

@@ -28,3 +28,11 @@
 .card-m-2.dragging{
   opacity: .5;
 }
+
+body {
+  background-color: #eee;
+}
+
+.navbar {
+  background-color: white;
+}

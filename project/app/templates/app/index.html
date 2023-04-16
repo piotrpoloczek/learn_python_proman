@@ -2,7 +2,9 @@
 
         
         {% block content %}
-            {% include 'app/modal.html' %}
+            {% include 'app/modal/modal-add-board.html' %}
+            {% include 'app/modal/modal-add-card.html' %}
+            {% include 'app/modal/modal-confirm-delete.html' %}
 
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -16,6 +18,7 @@
             
             <a href="#" class="btn btn-primary m-3" id="new-board" data-toggle="modal" data-target="#addBoardModal">Create new board</a>
             <div id="root"></div>
+         
 
         {% endblock %}
 

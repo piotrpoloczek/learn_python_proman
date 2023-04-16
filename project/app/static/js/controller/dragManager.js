@@ -1,3 +1,6 @@
+import { cardsHandler } from "../data/cardsHandler.js";
+
+
 export let dragManager = {
     initDragManager: function() {
         const draggables = document.querySelectorAll('.card-draggable')
@@ -12,26 +15,35 @@ export let dragManager = {
             draggable.addEventListener('dragstart', () => {
                 console.log('drag start')
                 draggable.classList.add('dragging')
-
+                console.log(draggable.dataset.cardId)
             })
 
             draggable.addEventListener('dragend', () =>{
                 draggable.classList.remove('.dragging')
-                console.log('drag over')
             })
         })
 
         containers.forEach(container => {
-            container.addEventListener('dragover', e => {
+            container.addEventListener('dragover', async e => {
                 e.preventDefault()
                 const afterElement = this.getDragAfterElement(container, e.clientY)
                 const draggable = document.querySelector('.dragging')
+
                 if (afterElement == null){
                     container.appendChild(draggable)
                 }
                 else{
                     container.insertBefore(draggable, afterElement)
+
                 }
+
+            })
+            container.addEventListener('dragend', async e =>{
+                const draggable = document.querySelector('.dragging')
+                let columnId = container.dataset.columnId
+                let cardId = draggable.dataset.cardId
+                console.log('order: '+draggable.dataset.cardOrder)
+                await cardsHandler.updateColumnIdInCard(cardId,columnId)
             })
         })
 

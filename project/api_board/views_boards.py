@@ -23,3 +23,8 @@ def create_board():
     board_title = request.get_json()["title"]
     queries.add_board(board_title)
     return {"title": board_title, "http_code": 201}
+
+@api_board_bp.route("/boards/<int:board_id>", methods=["DELETE"])
+@json_response
+def delete_board(board_id: int):
+    return queries.delete_board(board_id)

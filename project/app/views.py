@@ -4,7 +4,7 @@ from app import app
 import os
 
 
-@app.route("/")
+@app.route("/", methods=["GET"])
 def index():
     """
     This is a one-pager which shows all the boards and cards

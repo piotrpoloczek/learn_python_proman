@@ -36,12 +36,19 @@ def create_card(column_id):
     card_title = request.get_json()["title"]
     card_order = len(queries.get_everything_by_id('cards','column_id',column_id)) + 1
     print(card_order)
-    queries.add_card(column_id, card_title, card_order)
-    return {"title": card_title, "http_code": 201}
+    card_id = queries.add_card(column_id, card_title, card_order)
+    return {"title": card_title, "card_id": card_id, "http_code": 201}
 
 @api_board_bp.route("/boards/columns/cards/<int:card_id>", methods=["DELETE"])
 @json_response
 def delete_card(card_id: int):
     return queries.delete_card(card_id)
     # return queries.delete('cards',card_id)
-    
+
+
+@api_board_bp.route("/boards/columns/<int:column_id>/cards/<int:card_id>/edit", methods=["POST"])
+@json_response
+def edit_card(card_id, column_id):
+    # card_order = len(queries.get_everything_by_id('cards','column_id',column_id)) + 1
+    queries.edit(column_id, card_id)
+    return {"id": card_id, "http_code": 201} 

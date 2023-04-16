@@ -13,4 +13,8 @@ export let boardsHandler = {
         // creates new board, saves it and calls the callback function with its data
         return await dataCRUD.apiPost(`/api/boards/`,{"title": boardTitle});
     },
+    deleteBoard: async function (boardId) {
+        // delete board
+        return await dataCRUD.apiDelete(`/api/boards/${boardId}`);
+    },
 }

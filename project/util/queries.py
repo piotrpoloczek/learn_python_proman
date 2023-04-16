@@ -65,12 +65,13 @@ def add_column(board_id, title, column_order):
 
 
 def add_card(column_id, title, card_order):
-    data_manager.execute_insert( 
+    return data_manager.execute_insert( 
                 """
                 INSERT into 
                 cards (column_id, title, card_order)
                 values 
-                (%(column_id)s, %(title)s, %(card_order)s)"""
+                (%(column_id)s, %(title)s, %(card_order)s)
+                RETURNING id"""
                 , {'column_id': column_id, 'title': title, 'card_order': card_order})
 
 
@@ -92,9 +93,30 @@ def delete_column(id):
         , {'id':id}
     )
 
+def delete_board(id):
+    data_manager.execute_insert(
+        """
+        DELETE from columns
+        WHERE board_id = %(id)s;
+        
+        DELETE from boards
+        WHERE id = %(id)s
+        """
+        , {'id':id}
+    )
+
 # def delete(table_name,id):
 #     select = f'''
 #         DELETE from {table_name}
 #         WHERE id = {id}
 #         '''
 #     return data_manager.execute_insert(select)
+
+def edit(column_id, card_id):
+    select = f'''
+        UPDATE cards SET
+        column_id = {column_id}
+        WHERE id = {card_id}
+        '''
+    return data_manager.execute_insert(select)
+

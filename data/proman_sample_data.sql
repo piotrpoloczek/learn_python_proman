@@ -18,7 +18,7 @@ SET default_with_oids = false;
 ---
 DROP TABLE IF EXISTS boards CASCADE;
 DROP TABLE IF EXISTS columns CASCADE;
-DROP TABLE IF EXISTS cards;
+DROP TABLE IF EXISTS cards CASCADE;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS boards_types;
 
@@ -31,19 +31,19 @@ CREATE TABLE boards (
     id          SERIAL PRIMARY KEY  NOT NULL,
     title       VARCHAR(200)        NOT NULL,
     user_id     INTEGER,
-    type        INTEGER             NOT NULL default 1           
+    type        INTEGER             NOT NULL default 1    
 );
 
 CREATE TABLE columns (
     id          SERIAL PRIMARY KEY  NOT NULL,
-    board_id    INTEGER             NOT NULL,
+    board_id    INTEGER       REFERENCES columns(id) ON DELETE CASCADE ON UPDATE CASCADE,
     title       VARCHAR (200)       NOT NULL,
     column_order  INTEGER           NOT NULL
 );
 
 CREATE TABLE cards (
     id          SERIAL PRIMARY KEY  NOT NULL,
-    column_id   INTEGER             NOT NULL,
+    column_id   INTEGER       REFERENCES columns(id) ON DELETE CASCADE ON UPDATE CASCADE,
     title       VARCHAR (200)       NOT NULL,
     card_order  INTEGER             NOT NULL
 );
@@ -74,6 +74,9 @@ INSERT INTO boards_types(title) VALUES ('private');
 INSERT INTO boards(title) VALUES ('Board 1');
 INSERT INTO boards(title) VALUES ('Board 2');
 INSERT INTO boards(title) VALUES ('Board 3');
+INSERT INTO boards(title, user_id, type) VALUES ('Board 1 user 1', 1, 2);
+INSERT INTO boards(title, user_id, type) VALUES ('Board 2 user 2', 2, 2);
+INSERT INTO boards(title, user_id, type) VALUES ('Board 3 user 1', 1, 2);
 
 INSERT INTO columns VALUES (nextval('columns_id_seq'), 1, 'planning', 1);
 INSERT INTO columns VALUES (nextval('columns_id_seq'), 1, 'to do', 2);
