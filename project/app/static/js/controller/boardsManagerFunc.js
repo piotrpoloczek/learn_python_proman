@@ -2,6 +2,7 @@ import {domManager} from "../view/domManager.js";
 import { columnManager } from "./columnManager.js";
 import { dragManager } from "./dragManager.js";
 import { boardsHandler } from "../data/boardsHandler.js";
+import { boardsManager } from "./boardsManager.js";
 
 
 export let boardsManagerFunc = {
@@ -46,6 +47,7 @@ export let boardsManagerFunc = {
         }
     },
     deleteBoardButton: async function (clickEvent) {
+        // var columnId = clickEvent.curentTarget.dataset.columnId
         let boardId = await clickEvent.currentTarget.dataset.boardId
         console.log("delete board: "+ boardId)
         await boardsHandler.deleteBoard(boardId)
@@ -53,5 +55,8 @@ export let boardsManagerFunc = {
     
         let boardElement = document.querySelector(`.full-board[data-board-id="${boardId}"]`)
         boardElement.remove()
-    },
+    
+        domManager.emptyElement('#root');
+        await boardsManager.loadBoards(null)
+    }
 }

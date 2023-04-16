@@ -6,7 +6,7 @@ import { boardsManagerFunc } from "./boardsManagerFunc.js";
 
 
 export let boardsManager = {
-    loadBoards: async function (userId, openBoardId) {
+    loadBoards: async function (userId) {
         console.log("get user id from flask: " + userId);
         const boards = await boardsHandler.getBoards();
         for (let board of boards) {
@@ -32,9 +32,6 @@ export let boardsManager = {
                     "click",
                     boardsManagerFunc.deleteBoardButton
                 ) 
-
-                boardsManagerFunc.openStaysOpen(openBoardId, board.id);
-
             }; 
         }
     },
