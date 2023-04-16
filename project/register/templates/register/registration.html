@@ -32,11 +32,12 @@
           
                           <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
+
                           {% with messages = get_flashed_messages() %}
                           {% if messages %}
                            <ul>
                            {% for message in messages %}
-                             <li style="list-style: none; color: red;">{{ message }}</li>
+                             <li class="alert">{{ message }}</li>
                            {% endfor %}
                            </ul>
                           {% endif %}

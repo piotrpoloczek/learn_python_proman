@@ -72,3 +72,29 @@ def add_card(column_id, title, card_order):
                 values 
                 (%(column_id)s, %(title)s, %(card_order)s)"""
                 , {'column_id': column_id, 'title': title, 'card_order': card_order})
+
+
+def delete_card(id):
+    data_manager.execute_insert(
+        """
+        DELETE from cards
+        WHERE id = %(id)s
+        """
+        , {'id':id}
+    )
+
+def delete_column(id):
+    data_manager.execute_insert(
+        """
+        DELETE from columns
+        WHERE id = %(id)s
+        """
+        , {'id':id}
+    )
+
+# def delete(table_name,id):
+#     select = f'''
+#         DELETE from {table_name}
+#         WHERE id = {id}
+#         '''
+#     return data_manager.execute_insert(select)

@@ -20,4 +20,13 @@ export let domManager = {
         element.classList.remove(cssClassToRemove);
         element.classList.add(cssClasstoAdd);
     },
+    emptyElement(elementIdentifier) {
+        const element = document.querySelector(elementIdentifier);
+        if (element) {
+            element.innerHTML = "";
+        } else {
+            console.error("could not empty specified element: " + element);
+        }
+    },
+    
 };

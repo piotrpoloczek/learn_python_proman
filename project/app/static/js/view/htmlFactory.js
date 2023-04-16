@@ -24,21 +24,27 @@ export function htmlFactory(template) {
 
 function columnBuilder(column, isFirst) {
 
-    const buttonaddCard = isFirst == true ? `<button class="btn btn-primary" type="button" align="right" data-board-id="${column.id}">Add card</button>` : ``;
+    const buttonaddCard = isFirst == true ? `<a href="#" class="btn btn-primary m-3" id="new-card" data-toggle="modal" data-target="#addCardModal" type="button" align="right" data-board-id="${column.id}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                                            <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"/>
+                                            <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+                                            </svg>
+                                            </a></button>` : ``;
+    const buttonDeleteColumn = `<button data-toggle="modal" data-target="#deleteColumnModal" type="button" class="btn btn-primary">
+                                                <span class="bi bi-trash"></span></button>`
     
     return `
                 <div class="col-sm-4" data-column-id="${column.id}">
                     <div class="card m-2">
-                    <div class="row card-header m-0">    
-                        <div class="col-sm-9">
-                            <h5 contenteditable="true">${column.title}</h5>
-                        </div>
+                        <div class="row card-header m-0"> 
+                            <div class="col-sm-9">
+                                <h5>${column.title} </h5>
+                            </div>
                             <div class="col-sm-3" id="div-button" data-board-id="${column.id}">
-                                ${buttonaddCard}
+                            ${buttonDeleteColumn} ${buttonaddCard} 
                             </div>
                         </div>
-                        <div class="card-body" id="cards" data-column-id="${column.id}">
-                        </div>
+                        <div class="card-body" id="cards" data-column-id="${column.id}"></div>
                     </div>
                 </div>
             `;
@@ -51,7 +57,7 @@ function boardBuilder(board) {
                 
                 <div class="row card-header m-0">
                     <div class="col-sm-11">
-                        <h5 id="board-header" data-board-id="${board.id}" contenteditable="true">${board.title}</h5>
+                        <h5 id="board-header" data-board-id="${board.id}">${board.title}</h5>
                     </div>
                     <div class="col-sm-1" data-board-id="${board.id}">
                         <button class="btn btn-primary closed" type="button" align="right" data-board-id="${board.id}">
@@ -68,17 +74,16 @@ function boardBuilder(board) {
 };
 
 function cardBuilder(card) {
-    return `<div class="card m-2">
+    return `<div class="card m-2 card-draggable" draggable="true" style="cursor: move;">
                 <div class="row card-header m-0">    
                     <div class="col-sm-9">
-                        <h5 contenteditable="true">${card.title}</h5>
+                        <h5>${card.title}</h5>
                     </div>
-                        <div class="col-sm-3" id="div-button" data-board-id="${card.id}">
-                            <button class="btn btn-primary" type="button" align="right" data-card-id="${card.id}">delete</button>
+                        <div class="col-sm-3" id="div-button" data-card-id="${card.id}">
+                        <button data-toggle="modal" data-target="#deleteModal" type="button" class="btn btn-primary" >
+                        <span class="bi bi-trash"></span></button>
                         </div>
-                    </div>
-                    <div class="card-body" id="cards" data-card-id="${card.id}">
-                        Description example
                     </div>
             </div>`;
 };
+

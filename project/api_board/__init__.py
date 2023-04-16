@@ -9,4 +9,4 @@ api_board_bp = Blueprint(
     url_prefix="/api",
 )
 
-from api_board import views
+from api_board import views_boards, views_cards, views_columns
