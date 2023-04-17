@@ -22,6 +22,12 @@ export let cardsManager = {
                 "click",
                 deleteCardButton
             );
+            domManager.addEventListener(
+                `.add-card-button[data-column-id="${columnId}"]`,
+                "click",
+                addCardButton
+            );
+
     },
     createCard: async function () {
         console.log("print something modal works")
@@ -32,8 +38,7 @@ export let cardsManager = {
         let columnId = document.querySelector('.col-sm-4[data-column-id]').getAttribute('data-column-id');
         console.log("patrz tuuuu" + columnId)
         
-        let cardId = cardsHandler.createNewCard(title, columnId)
-        cardId.then(response => console.log(response));
+        
 
         // get id from request after posting
         //await cardsHandler.getCard()
@@ -50,4 +55,20 @@ async function deleteCardButton(clickEvent) {
     // remove element from column in view
     let cardElement = document.querySelector(`.card-draggable[data-card-id="${cardId}"]`)
     cardElement.remove()
+}
+
+
+async function addCardButton(clickEvent) {
+    // var cardId = document.querySelector('.card-draggable[data-card-id]').getAttribute('data-card-id');
+    // let columnId = await clickEvent.currentTarget.dataset.cardId
+    // console.log("add card: "+ columnId)
+    let cardId = await cardsHandler.createNewCard("new cardsdafd", 1)
+    //console.log(cardId)
+    let cardPromise = await cardId;
+    console.log(cardPromise) 
+
+
+    // remove element from column in view
+    // let cardElement = document.querySelector(`.card-draggable[data-card-id="${cardId}"]`)
+    // cardElement.remove()
 }

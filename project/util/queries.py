@@ -71,7 +71,7 @@ def add_card(column_id, title, card_order):
                 cards (column_id, title, card_order)
                 values 
                 (%(column_id)s, %(title)s, %(card_order)s)
-                RETURNING id"""
+                RETURNING cards.id"""
                 , {'column_id': column_id, 'title': title, 'card_order': card_order})
 
 

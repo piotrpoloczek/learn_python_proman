@@ -33,6 +33,7 @@ async function deleteColumnButton(clickEvent) {
     columnsHandler.deleteColumn(columnId)
 
     // remove element from board in view
-    let columnElement = document.querySelector(`.col-sm-4[data-column-id="${columnId}"]`)
-    columnElement.remove()
+    // let columnElement = document.querySelector(`.col-sm-4[data-column-id="${columnId}"]`)
+    // columnElement.remove()
+    
 }
