@@ -12,17 +12,20 @@ export let columnManager = {
         let isFirst = true;
         for(let column of columns) {
             const columnBuilder = htmlFactory(htmlTemplates.column);
-            const content = columnBuilder(column, isFirst);
+            const content = columnBuilder(column);
             domManager.addChild(`#div-cards[data-board-id="${boardId}"]`, content);
-            isFirst = false
             console.log("columnId: " + column.id)
             await cardsManager.loadCards(column.id)
             domManager.addEventListener(
                 `div.div-button[data-column-id="${column.id}"]`,
                 "click",
                 deleteColumnButton
-            )    
+            )
         }
+        // // addNewColumnButton
+        const columnBuilder = htmlFactory(htmlTemplates.addColumn);
+        const content = columnBuilder();
+        domManager.addChild(`#div-cards[data-board-id="${boardId}"]`, content);
     }
 }
 

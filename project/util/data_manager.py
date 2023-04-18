@@ -69,10 +69,8 @@ def execute_insert(statement, variables=None, fetchall=True):
     statement: insert statement
     variables:  optional parameter dict"""
 
-    result_set = []
-
     with establish_connection() as conn:
         with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
             cursor.execute(statement, variables)
-            result_set =  cursor.fetchone()
-    return result_set
+
+
