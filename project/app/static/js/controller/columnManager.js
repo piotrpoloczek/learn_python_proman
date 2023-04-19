@@ -9,7 +9,7 @@ export let columnManager = {
     loadColumn: async function(boardId) {
         const columns = await columnsHandler.getColumnsByBoardId(boardId);
         console.log(columns);
-        let isFirst = true;
+        // let isFirst = true;
         for(let column of columns) {
             const columnBuilder = htmlFactory(htmlTemplates.column);
             const content = columnBuilder(column);
@@ -21,6 +21,10 @@ export let columnManager = {
                 "click",
                 deleteColumnButton
             )
+            domManager.addEventListener(
+                `[data-column-id="${column.id}"].column-header-title--editable`,
+                "keypress",
+                updataColumnTilte)
         }
         // // addNewColumnButton
         const columnBuilder = htmlFactory(htmlTemplates.addColumn);
@@ -32,11 +36,21 @@ export let columnManager = {
 async function deleteColumnButton(clickEvent) {
     // var columnId = clickEvent.curentTarget.dataset.columnId
     let columnId = await clickEvent.currentTarget.dataset.columnId
-    console.log("delete column: "+ columnId)
-    columnsHandler.deleteColumn(columnId)
+    columnsHandler.deleteColumn(columnId) 
+}
 
-    // remove element from board in view
-    // let columnElement = document.querySelector(`.col-sm-4[data-column-id="${columnId}"]`)
-    // columnElement.remove()
-    
+async function updataColumnTilte(event) {
+    let columnElement = await event.currentTarget
+    let columnId = columnElement.dataset.columnId
+    // =====>>>>let boardId = tu tzeba jakoś przekazać boardId i tez będzie działać!!!!!!!!<<<========
+        if (event.keyCode === 13) {
+    // Zapobiegnięcie domyślnej akcji (np. przeładowania strony)
+            event.preventDefault();
+
+    // Odbieranie focusu z pola edycji tytułu
+            let newColumnTitle = columnElement.innerText;
+            await columnsHandler.updataColumn(columnId,newColumnTitle)
+            columnElement.setAttribute("contenteditable", "false");
+        }
+
 }

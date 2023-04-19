@@ -49,7 +49,7 @@ export let dataCRUD = {
         }
     },
 
-    apiPatch: async function (url, payload) {
+    apiPatch: async function (url) {
         try {
             let response = await fetch(url, {
                 method: 'PATCH',

@@ -11,7 +11,12 @@ def get_columns_for_board(board_id: int):
     All columns that belongs to a board
     :param board_id: id of the parent board
     """
-    return queries.get_everything_by_id('columns','board_id',board_id)
+    return queries.get_table_by_element_order_by_element(
+        "columns",
+        "board_id",
+        board_id,
+        "column_order"
+    )
 
 
 @api_board_bp.route("/boards/columns/", methods=["POST"])
@@ -29,3 +34,12 @@ def create_column():
 def delete_column(column_id: int):
     # return queries.delete(column_id)
     return queries.delete_column(column_id)
+
+
+@api_board_bp.route("/boards/columns/", methods=["PUT"])
+@json_response
+def updata_column():
+    column_title = request.json["title"]
+    column_id = request.json["id"]
+    queries.updata_column(column_id,column_title)
+    return {"title": column_title, "http_code": 201}

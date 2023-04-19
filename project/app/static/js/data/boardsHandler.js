@@ -17,4 +17,13 @@ export let boardsHandler = {
         // delete board
         return await dataCRUD.apiDelete(`/api/boards/${boardId}`);
     },
+    updataBoard: async function (boardId, newBoardTitle){
+        // edit board data
+        return await dataCRUD.apiPut(
+            `/api/boards/${boardId}/updata`, 
+            {
+                "id": boardId,
+                "title": newBoardTitle
+            });
+    },
 }

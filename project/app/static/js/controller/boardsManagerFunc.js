@@ -47,16 +47,39 @@ export let boardsManagerFunc = {
         }
     },
     deleteBoardButton: async function (clickEvent) {
-        // var columnId = clickEvent.curentTarget.dataset.columnId
         let boardId = await clickEvent.currentTarget.dataset.boardId
         console.log("delete board: "+ boardId)
         await boardsHandler.deleteBoard(boardId)
-    
     
         let boardElement = document.querySelector(`.full-board[data-board-id="${boardId}"]`)
         boardElement.remove()
     
         domManager.emptyElement('#root');
         await boardsManager.loadBoards(null)
+    },
+    // Funkcja obsługująca zatwierdzanie edycji za pomocą klawisza Enter
+    editBoardTilte: async function (event) {
+        let boardId = await event.currentTarget.dataset.boardId
+        // Sprawdzenie, czy naciśnięty klawisz to Enter (kod 13)
+            if (event.keyCode === 13) {
+
+        // Zapobiegnięcie domyślnej akcji (np. przeładowania strony)
+                event.preventDefault();
+
+        // Odbieranie focusu z pola edycji tytułu
+                let newBoardTitleElement = document.querySelector(`[data-board-id="${boardId}"].card-header-title--editable`)
+                let newBoardTitle = newBoardTitleElement.innerText; 
+                await boardsHandler.updataBoard(boardId,newBoardTitle)
+                newBoardTitleElement.setAttribute("contenteditable", "false");
+                newBoardTitle.innerHTML = newBoardTitle;
+            }
+        // domManager.emptyElement('#root');
+        // await boardsManager.loadBoards(null)
+    },
+    changeElementEdit: async function (event) {
+        let boardId = await event.currentTarget
+        console.log(boardId)
+        boardId.setAttribute("contenteditable", "true")
+        boardId.focus()
     }
 }
