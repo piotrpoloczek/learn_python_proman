@@ -29,7 +29,7 @@ export let boardsManagerFunc = {
     showAllBoard: async function(currentTargetElement, boardElement, boardId) {
         domManager.changeBetweenCSSClasses(currentTargetElement, "closed", "open");
         domManager.changeBetweenCSSClasses(boardElement, "height-0", "height-500");
-        await columnManager.loadColumn(boardId);
+        await columnManager.loadColumns(boardId);
         dragManager.initDragManager();
     },
     openStaysOpen: async function(openBoardId, boardId) {
@@ -71,7 +71,7 @@ export let boardsManagerFunc = {
                 let newBoardTitle = newBoardTitleElement.innerText; 
                 await boardsHandler.updataBoard(boardId,newBoardTitle)
                 newBoardTitleElement.setAttribute("contenteditable", "false");
-                newBoardTitle.innerHTML = newBoardTitle;
+                newBoardTitleElement.innerText = newBoardTitle;
             }
         // domManager.emptyElement('#root');
         // await boardsManager.loadBoards(null)

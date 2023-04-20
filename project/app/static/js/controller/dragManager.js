@@ -1,4 +1,5 @@
 import { cardsHandler } from "../data/cardsHandler.js";
+import { columnManager } from "./columnManager.js";
 
 
 export let dragManager = {
@@ -27,6 +28,9 @@ export let dragManager = {
             container.addEventListener('dragover', async e => {
                 e.preventDefault()
                 const afterElement = getDragAfterElement(container, e.clientY)
+                const draggableElements = [...container.querySelectorAll('.card-draggable:not(.dragging)')]
+                console.log("dragable elements:")
+                console.log(draggableElements)
 
                 // there is the element 
                 console.log("after element: " + afterElement);
@@ -37,19 +41,34 @@ export let dragManager = {
 
                 if (afterElement == null){
                     container.appendChild(draggable)
+                    // get the length of the elements in containers and set the card order to it
                 }
                 else{
                     container.insertBefore(draggable, afterElement)
+
+                    // get after element and elements after afterElement
+                    console.log("card order of afterElement")
+                    console.log(afterElement.dataset.cardOrder)
 
                 }
 
             })
             container.addEventListener('dragend', async e =>{
                 const draggable = document.querySelector('.dragging')
+                draggable.classList.remove('dragging')
                 let columnId = container.dataset.columnId
                 let cardId = draggable.dataset.cardId
-                console.log('order: '+draggable.dataset.cardOrder)
-                await cardsHandler.updateColumnIdInCard(cardId,columnId)
+                let cardOrder = draggable.dataset.cardOrder
+                console.log('order: '+ draggable.dataset.cardOrder)
+                await cardsHandler.updateColumnIdInCard(cardId,columnId, cardOrder)
+
+                
+
+                // let boardElement = document.querySelector(`#div-cards[data-board-id="1"]`);
+                // boardElement.innerHTML = ""
+                // await columnManager.loadColumns(1);
+                // dragManager.initDragManager();  
+
             })
         })
 

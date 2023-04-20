@@ -27,7 +27,11 @@ export let cardsManager = {
                 "click",
                 addCardButton
             );
-
+            domManager.addEventListener(
+                `[data-card-id="${card.id}"].card-header-title--editable`,
+                "keypress",
+                updataCardTilte
+            );
     },
 };
 
@@ -46,8 +50,28 @@ async function deleteCardButton(clickEvent) {
 async function addCardButton(clickEvent) {
     let columnId = await clickEvent.currentTarget.dataset.columnId
     let cardTitle = document.querySelector(`.add-card-imput[data-column-id="${columnId}"]`).value
-    let cardId = await cardsHandler.createNewCard(cardTitle, columnId)
+    let cardResponse = await cardsHandler.createNewCard(cardTitle, columnId)
 
-    let cardPromise = await cardId;
-    console.log(cardPromise) 
+    let cardPromise = await cardResponse;
+    console.log(cardPromise)
+    let cardId = cardPromise[0][0].id;
+    let card = await cardsHandler.getCard(cardId)
+    console.log(columnId + " fadfasdfasdfasd " + card + " dfadsf " + cardPromise)
+    cardsManager.loadCard(columnId, card);
 }
+
+async function updataCardTilte(event) {
+    let cardElement = await event.currentTarget
+    let cardId = cardElement.dataset.columnId
+
+        if (event.keyCode === 13) {
+    // Zapobiegnięcie domyślnej akcji (np. przeładowania strony)
+            event.preventDefault();
+
+    // Odbieranie focusu z pola edycji tytułu
+            let newCardTitle = cardElement.innerText;
+            await cardsHandler.updataCard(cardId,newCardTitle)
+            cardElement.setAttribute("contenteditable", "false");
+        }
+}
+
