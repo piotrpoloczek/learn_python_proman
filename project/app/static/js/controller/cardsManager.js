@@ -12,6 +12,11 @@ export let cardsManager = {
         for (let card of cards) {
             this.loadCard(columnId, card);
         }
+        domManager.addEventListener(
+            `.add-card-button[data-column-id="${columnId}"]`,
+            "click",
+            addCardButton
+        );
     },
     loadCard: async function (columnId, card) {
         const cardBuilder = htmlFactory(htmlTemplates.card);
@@ -21,11 +26,6 @@ export let cardsManager = {
                 `div.div-button[data-card-id="${card.id}"]`,
                 "click",
                 deleteCardButton
-            );
-            domManager.addEventListener(
-                `.add-card-button[data-column-id="${columnId}"]`,
-                "click",
-                addCardButton
             );
             domManager.addEventListener(
                 `[data-card-id="${card.id}"].card-header-title--editable`,
@@ -49,20 +49,26 @@ async function deleteCardButton(clickEvent) {
 
 async function addCardButton(clickEvent) {
     let columnId = await clickEvent.currentTarget.dataset.columnId
-    let cardTitle = document.querySelector(`.add-card-imput[data-column-id="${columnId}"]`).value
+    let cardTitleElement = document.querySelector(`.add-card-imput[data-column-id="${columnId}"]`)
+    let cardTitle = cardTitleElement.value
     let cardResponse = await cardsHandler.createNewCard(cardTitle, columnId)
 
     let cardPromise = await cardResponse;
     console.log(cardPromise)
     let cardId = cardPromise[0][0].id;
     let card = await cardsHandler.getCard(cardId)
+    console.log("card: ")
+    console.log(card[0])
     console.log(columnId + " fadfasdfasdfasd " + card + " dfadsf " + cardPromise)
-    cardsManager.loadCard(columnId, card);
+    await cardsManager.loadCard(columnId, card[0]);
+
+    cardTitleElement.value = ""
+
 }
 
 async function updataCardTilte(event) {
     let cardElement = await event.currentTarget
-    let cardId = cardElement.dataset.columnId
+    let cardId = cardElement.dataset.cardId
 
         if (event.keyCode === 13) {
     // Zapobiegnięcie domyślnej akcji (np. przeładowania strony)

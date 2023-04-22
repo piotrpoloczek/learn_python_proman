@@ -20,6 +20,12 @@ def get_cards_for_board(board_id: int):
     """
     return queries.get_everything_by_id('cards','board_id',board_id)
 
+@api_board_bp.route("/boards/columns/cards/<int:card_id>", methods=["GET"])
+@json_response
+def get_card_by_id(card_id: int):
+    print(queries.get_everything_by_id('cards','id',card_id))
+    return queries.get_everything_by_id('cards','id',card_id)
+
 @api_board_bp.route("/boards/columns/<int:column_id>/cards/", methods=["GET"])
 @json_response
 def get_cards_for_columns(column_id: int):
@@ -61,5 +67,7 @@ def swich_columnId():
 def updata_cards():
     card_title = request.json["title"]
     card_id = request.json["id"]
+    print('id')
+    print(card_id)
     queries.updata_card(card_id,card_title)
-    return {"title": card_title, "http_code": 201}
+    return {"id": card_id, "title": card_title, "http_code": 201}

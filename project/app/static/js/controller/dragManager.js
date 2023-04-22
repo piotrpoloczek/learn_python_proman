@@ -32,6 +32,7 @@ export let dragManager = {
                 console.log("dragable elements:")
                 console.log(draggableElements)
 
+
                 // there is the element 
                 console.log("after element: " + afterElement);
                 console.log(afterElement)
@@ -59,8 +60,26 @@ export let dragManager = {
                 let columnId = container.dataset.columnId
                 let cardId = draggable.dataset.cardId
                 let cardOrder = draggable.dataset.cardOrder
-                console.log('order: '+ draggable.dataset.cardOrder)
-                await cardsHandler.updateColumnIdInCard(cardId,columnId, cardOrder)
+                console.log(cardId + 'order: '+ draggable.dataset.cardOrder)
+
+
+                // get all element from container
+                const draggableElements = [...container.querySelectorAll('.card-draggable:not(.dragging)')]
+                console.log("dragable container elements:")
+                console.log(draggableElements)
+                
+                for (let i = 0; i < draggableElements.length; i++) {
+                    console.log("card title: " + draggableElements[i].innerText +  ", card id: " + draggableElements[i].dataset.cardId + ", card order: " + i)
+                    
+                    // TODO: update card_order for each card
+                    await cardsHandler.updateColumnIdInCard(
+                        draggableElements[i].dataset.cardId,
+                        columnId,
+                        i
+                    )
+                }
+
+                console.log(cardId + 'order after: '+ draggable.dataset.cardOrder)
 
                 
 

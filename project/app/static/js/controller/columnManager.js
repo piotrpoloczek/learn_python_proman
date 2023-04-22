@@ -25,6 +25,11 @@ export let columnManager = {
         domManager.addChild(`#div-cards[data-board-id="${boardId}"]`, content);
         console.log("columnId: " + column.id)
         await cardsManager.loadCards(column.id)
+        // domManager.addEventListener(
+        //     `button#new-column`,
+        //     "click",
+        //     addColumnButton
+        // );
         domManager.addEventListener(
             `div.div-button[data-column-id="${column.id}"]`,
             "click",
@@ -34,8 +39,31 @@ export let columnManager = {
             `[data-column-id="${column.id}"].column-header-title--editable`,
             "keypress",
             updataColumnTilte)
-    }
+    },
+
+    createColumn: async function () {
+        console.log("print something modal works")
+        let titleField = document.querySelector("input#title-column");
+        console.log(titleField);
+        let title = titleField.value;
+        console.log("text from field: " + title);
+        columnsHandler.createColumn(title);
+    
+        // TODO add user id and use it in refreshing page by AJAX
+    },
+    
 }
+
+async function addColumnButton(clickEvent) {
+    let boardId = await clickEvent.currentTarget.dataset.boardId
+    console.log("boardId")
+    console.log(boardId)
+    let columnId = await columnsHandler.createColumn(columnTitle)
+
+    let columnPromise = await boardId;
+    console.log(columnPromise) 
+}
+
 
 async function deleteColumnButton(clickEvent) {
     // var columnId = clickEvent.curentTarget.dataset.columnId

@@ -19,11 +19,10 @@ def get_columns_for_board(board_id: int):
     )
 
 
-@api_board_bp.route("/boards/columns/", methods=["POST"])
+@api_board_bp.route("/boards/<int:board_id>/columns/", methods=["POST"])
 @json_response
-def create_column():
+def create_column(board_id):
     data = request.get_json()
-    board_id = request.get_json()["board_id"]
     title = request.get_json()["title"]
     column_order = len(queries.get_everything_by_id('columns', 'board_id', board_id)) + 1
     queries.add_column(board_id, title, column_order)

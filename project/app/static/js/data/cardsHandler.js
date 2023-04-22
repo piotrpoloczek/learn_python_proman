@@ -6,7 +6,7 @@ export let cardsHandler = {
 
     },
     getCard: async function (cardId) {
-        return await dataCRUD.apiGet(`/api/boards/columns/${columnId}/cards/`);
+        return await dataCRUD.apiGet(`/api/boards/columns/cards/${cardId}/`);
     },
     getCardsByColumnId: async function (columnId) {
         return await dataCRUD.apiGet(`/api/boards/columns/${columnId}/cards/`);
@@ -17,7 +17,7 @@ export let cardsHandler = {
     },
     deleteCard: async function (cardId) {
         // delete card
-        return await dataCRUD.apiDelete(`/api/boards/columns/cards/${cardId}`);
+        return await dataCRUD.apiDelete(`/api/boards/columns/cards/${cardId}/`);
     },
     updateColumnIdInCard: async function (cardId, columnId, cardOrder) {
         // 
@@ -31,7 +31,6 @@ export let cardsHandler = {
             );
     },
     updataCard: async function (cardId, newCardTitle){
-        // edit board data
         return await dataCRUD.apiPut(
             `/api/boards/columns/cards`, 
             {

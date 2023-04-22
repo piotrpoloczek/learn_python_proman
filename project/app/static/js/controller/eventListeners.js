@@ -1,5 +1,5 @@
 import { boardsManager } from "./boardsManager.js";
-import { cardsManager } from "./cardsManager.js";
+import { columnManager } from "./columnManager.js";
 
 
 export let eventListeners = {
@@ -7,7 +7,7 @@ export let eventListeners = {
         let saveBoardButton = document.querySelector("button#save-board");
         saveBoardButton.addEventListener("click", boardsManager.createBoard);
 
-        let saveCardButton = document.querySelector("button#save-card");
-        saveCardButton.addEventListener("click", cardsManager.createCard);
+        // let saveColumnButton = document.querySelector("button#save-column");
+        // saveColumnButton.addEventListener("click", columnManager.createColumn);
     }
 }
