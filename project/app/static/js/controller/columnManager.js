@@ -10,26 +10,22 @@ export let columnManager = {
         const columns = await columnsHandler.getColumnsByBoardId(boardId);
 
         for(let column of columns) {
-            console.log(column)
             await columnManager.loadColumn(column, boardId);
         }
-
-        // // addNewColumnButton
         const columnBuilder = htmlFactory(htmlTemplates.addColumn);
-        const content = columnBuilder();
+        const content = columnBuilder(boardId);
         domManager.addChild(`#div-cards[data-board-id="${boardId}"]`, content);
+        domManager.addEventListener(
+            `[data-board-id="${boardId}"].add-column-button`,
+            "click",
+            addColumnButton
+        );
     },
     loadColumn: async function(column, boardId) {
         const columnBuilder = htmlFactory(htmlTemplates.column);
         const content = columnBuilder(column);
         domManager.addChild(`#div-cards[data-board-id="${boardId}"]`, content);
-        console.log("columnId: " + column.id)
         await cardsManager.loadCards(column.id)
-        // domManager.addEventListener(
-        //     `button#new-column`,
-        //     "click",
-        //     addColumnButton
-        // );
         domManager.addEventListener(
             `div.div-button[data-column-id="${column.id}"]`,
             "click",
@@ -40,28 +36,23 @@ export let columnManager = {
             "keypress",
             updataColumnTilte)
     },
-
-    createColumn: async function () {
-        console.log("print something modal works")
-        let titleField = document.querySelector("input#title-column");
-        console.log(titleField);
-        let title = titleField.value;
-        console.log("text from field: " + title);
-        columnsHandler.createColumn(title);
-    
-        // TODO add user id and use it in refreshing page by AJAX
-    },
-    
 }
 
 async function addColumnButton(clickEvent) {
     let boardId = await clickEvent.currentTarget.dataset.boardId
-    console.log("boardId")
-    console.log(boardId)
-    let columnId = await columnsHandler.createColumn(columnTitle)
 
-    let columnPromise = await boardId;
-    console.log(columnPromise) 
+    let columnTitleElement = document.querySelector(`[data-board-id="${boardId}"].add-column-imput`)
+    let columnTitle = columnTitleElement.value
+    let columnResponse = await columnsHandler.createColumn(columnTitle, boardId)
+
+    let columnPromise = await columnResponse;
+
+    let columnId = columnPromise[0][0].id;
+    let column = await columnsHandler.getColumn(columnId)
+    await columnManager.loadColumn(column[0], boardId);
+
+    columnTitleElement.value = ""
+
 }
 
 
@@ -69,6 +60,9 @@ async function deleteColumnButton(clickEvent) {
     // var columnId = clickEvent.curentTarget.dataset.columnId
     let columnId = await clickEvent.currentTarget.dataset.columnId
     columnsHandler.deleteColumn(columnId) 
+
+    let columnElement = document.querySelector(`.column-body[data-column-id="${columnId}"]`)
+    columnElement.remove()
 }
 
 async function updataColumnTilte(event) {

@@ -10,7 +10,6 @@ def get_card(card_id: int):
     return queries.get_everything_by_id('cards','id',card_id)
 
 
-
 @api_board_bp.route("/boards/<int:board_id>/columns/cards/", methods=["GET"])
 @json_response
 def get_cards_for_board(board_id: int):
@@ -25,6 +24,7 @@ def get_cards_for_board(board_id: int):
 def get_card_by_id(card_id: int):
     print(queries.get_everything_by_id('cards','id',card_id))
     return queries.get_everything_by_id('cards','id',card_id)
+
 
 @api_board_bp.route("/boards/columns/<int:column_id>/cards/", methods=["GET"])
 @json_response
@@ -41,7 +41,6 @@ def get_cards_for_columns(column_id: int):
 def create_card(column_id):
     card_title = request.get_json()["title"]
     card_order = len(queries.get_everything_by_id('cards','column_id',column_id)) + 1
-    print(card_order)
     card_id = queries.add_card(column_id, card_title, card_order)
     return card_id, 201
 

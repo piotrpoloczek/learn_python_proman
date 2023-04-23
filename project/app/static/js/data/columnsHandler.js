@@ -1,6 +1,10 @@
 import { dataCRUD } from "./dataCRUD.js";
 
 export let columnsHandler = {
+    getColumn: async function (columnId) {
+        return await dataCRUD.apiGet(`/api/boards/columns/${columnId}/`);
+    },
+
     getColumnsByBoardId: async function (boardId) {
         return await dataCRUD.apiGet(`/api/boards/${boardId}/columns/`);
     },

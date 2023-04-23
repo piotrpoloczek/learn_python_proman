@@ -25,9 +25,8 @@ export function htmlFactory(template) {
 };
 
 function columnBuilder(column) {
-    
     return `
-                <div class="col-sm-4" data-column-id="${column.id}">
+                <div class="col-sm-4 column-body" data-column-id="${column.id}">
                     <div class="card m-1">
                         <div class="row card-header m-0"> 
                             <div class="col-sm-10">
@@ -59,6 +58,7 @@ function columnBuilder(column) {
                         </div>
                     </div>
                 </div>
+            </div>
             `;
 };
 
@@ -115,14 +115,28 @@ function cardBuilder(card) {
             </div>`;
 };
 
-function addColumnBuilder(){
+function addColumnBuilder(boardId){
     return`
-    <div class="col-sm-1 div-button">
-        <button id="new-column" data-toggle="modal" data-target="#addColumnModal" type="button" class="btn btn-primary" >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
-                <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"/>
-                <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
-            </svg>
-    </div>`
-
+        <div class="col-sm-4">
+            <div class="card m-1">
+                <div class="card-body" id="cards" >
+                    <div class="row card m-2 card-header">
+                        <div class="input-group mb-2">
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control add-column-imput" data-board-id="${boardId}" placeholder="Add new column" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                            </div>
+                            <div class="col-sm-3 input-group-append">
+                                <button class="btn btn-outline-secondary add-column-button" type="button" data-board-id="${boardId}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus" viewBox="0 0 16 16">
+                                        <path d="M8 6.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 .5-.5z"/>
+                                        <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        `
 }

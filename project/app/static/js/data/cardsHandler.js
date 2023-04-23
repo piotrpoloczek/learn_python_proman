@@ -3,11 +3,12 @@ import { dataCRUD } from "./dataCRUD.js";
 
 export let cardsHandler = {
     getCards: async function () {
-
     },
+
     getCard: async function (cardId) {
         return await dataCRUD.apiGet(`/api/boards/columns/cards/${cardId}/`);
     },
+    
     getCardsByColumnId: async function (columnId) {
         return await dataCRUD.apiGet(`/api/boards/columns/${columnId}/cards/`);
     },

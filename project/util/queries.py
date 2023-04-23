@@ -62,7 +62,7 @@ def user_data(email):
     return user_data
 
 def add_board(title):
-    data_manager.execute_insert( 
+    return data_manager.execute_insert( 
                 """
                 INSERT into 
                 boards (title)
@@ -71,13 +71,26 @@ def add_board(title):
                 , {'title': title})
 
 
-def add_column(board_id, title, column_order):
-    data_manager.execute_insert( 
+def add_col(board_id, title, column_order):
+    return data_manager.execute_insert( 
                 """
                 INSERT into 
                 columns (board_id, title, column_order)
                 values 
-                (%(board_id)s, %(title)s, %(column_order)s)"""
+                (%(board_id)s, %(title)s, %(column_order)s)
+                RETURNING columns.id
+                """
+                , {'board_id': board_id, 'title': title, 'column_order': column_order})
+
+
+def add_column(board_id, title, column_order):
+    return data_manager.execute_select( 
+                """
+                INSERT into 
+                columns (board_id, title, column_order)
+                values 
+                (%(board_id)s, %(title)s, %(column_order)s)
+                RETURNING columns.id"""
                 , {'board_id': board_id, 'title': title, 'column_order': column_order})
 
 
