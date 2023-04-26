@@ -3,6 +3,7 @@ import {domManager} from "../view/domManager.js";
 import {cardsHandler} from "../data/cardsHandler.js";
 import { boardsManager } from "./boardsManager.js";
 import { refreshManager } from "./refreshManager.js";
+import { dragManager } from "./dragManager.js";
 
 
 export let cardsManager = {
@@ -55,6 +56,7 @@ async function addCardButton(clickEvent) {
     let card = await cardsHandler.getCard(cardId)
     await cardsManager.loadCard(columnId, card[0]);
     cardTitleElement.value = ""
+    dragManager.initDragManager();
 }
 
 async function updataCardTilte(event) {

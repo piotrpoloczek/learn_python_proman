@@ -1,8 +1,9 @@
 import { boardsHandler } from "../data/boardsHandler.js";
 import {htmlFactory, htmlTemplates} from "../view/htmlFactory.js";
 import {domManager} from "../view/domManager.js";
-import { refreshManager } from "./refreshManager.js";
 import { boardsManagerFunc } from "./boardsManagerFunc.js";
+import { userManager } from "./userManager.js";
+
 
 
 export let boardsManager = {
@@ -10,7 +11,11 @@ export let boardsManager = {
         console.log("get user id from flask: " + userId);
         const boards = await boardsHandler.getBoards();
         for (let board of boards) {
-            console.log("board type: " + board.type + ", board userId: " + board.user_id + board.id);
+            this.loadBoard(board, userId);
+        }
+    },
+    loadBoard: async function (board, userId) {
+        console.log("board type: " + board.type + ", board userId: " + board.user_id + board.id);
             if (board.type == 1 || board.user_id == userId) {
                 const boardBuilder = htmlFactory(htmlTemplates.board);
                 const content = boardBuilder(board);
@@ -36,19 +41,37 @@ export let boardsManager = {
                     boardsManagerFunc.changeElementEdit
                 )
             }; 
-        }
     },
     createBoard: async function () {
-        console.log("print something modal works")
-        let titleField = document.querySelector("input#title-board");
-        console.log(titleField);
-        let title = titleField.value;
-        console.log("text from field: " + title);
-        boardsHandler.createNewBoard(title);
+        // console.log("print something modal works")
+        // let titleField = document.querySelector("input#title-board");
+        // let title = titleField.value;
+        // let boardStatus = document.querySelector("#board-status").checked;
+        // boardsHandler.createNewBoard(title, boardStatus);
 
-        // TODO add user id and use it in refreshing page by AJAX
-        const openBoardId = refreshManager.getOpenBoards();
-        domManager.emptyElement('#root');
-        await boardsManager.loadBoards(null, openBoardId);
-    },
+        let userName = document.getElementById("user_name");
+        console.log("userName: " + userName);
+        
+        if (userName) {
+            console.log("logIn")
+            let userId = userName.dataset.userId;
+            console.log("userId: " + userId);
+            let titleField = document.querySelector("input#title-board");
+            let title = titleField.value;
+            let boardStatus = document.querySelector("#board-status").checked;
+            let boardResponse = boardsHandler.createNewBoard(title, boardStatus, userId);
+            boardsManagerFunc.getBoardAfterCreate(boardResponse, userId)
+
+        } else {
+            console.log("not logIn")
+            let titleField = document.querySelector("input#title-board");
+            let title = titleField.value;
+            let boardResponse = boardsHandler.createNewBoard(title);
+            boardsManagerFunc.getBoardAfterCreate(boardResponse, null)
+        }
+
+        
+
+    
+        },
 };

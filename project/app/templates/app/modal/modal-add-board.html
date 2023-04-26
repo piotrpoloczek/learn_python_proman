@@ -1,4 +1,4 @@
-<div class="modal fade" id="addBoardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal" id="addBoardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -13,19 +13,12 @@
                 <label for="title-text" class="col-form-label">Title:</label>
                 <input type="text" class="form-control" id="title-board"></input>
             </div>
-            <label for="form-check-div" class="col-form-label">Board type:</label> 
-            <div class="form-check" id="form-check-div">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                <label class="form-check-label" for="flexRadioDefault1">
-                  Public
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                <label class="form-check-label" for="flexRadioDefault2">
-                  Private
-                </label>
-              </div>
+            {%if user_name%}
+            <div class="form-check row">
+                <div class="col-sm-1"><input class="form-check-input" type="checkbox" value="" id="board-status" checked></div>
+                <div class="col-sm-11"><label class="form-check-label" for="flexCheckDefault">Private</label></div>
+            </div>
+            {%endif%}
             </form>
         </div>
         <div class="modal-footer">

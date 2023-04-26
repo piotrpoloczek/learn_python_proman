@@ -3,6 +3,7 @@ import {domManager} from "../view/domManager.js";
 import {cardsManager} from "./cardsManager.js";
 import { columnsHandler } from "../data/columnsHandler.js";
 import { boardsManager } from "./boardsManager.js";
+import { dragManager } from "./dragManager.js";
 
 
 export let columnManager = {
@@ -12,14 +13,10 @@ export let columnManager = {
         for(let column of columns) {
             await columnManager.loadColumn(column, boardId);
         }
-        const columnBuilder = htmlFactory(htmlTemplates.addColumn);
-        const content = columnBuilder(boardId);
-        domManager.addChild(`#div-cards[data-board-id="${boardId}"]`, content);
-        domManager.addEventListener(
-            `[data-board-id="${boardId}"].add-column-button`,
-            "click",
-            addColumnButton
-        );
+
+        // add div with button and niput for creating the new column
+        addAddColumnElement(boardId);
+
     },
     loadColumn: async function(column, boardId) {
         const columnBuilder = htmlFactory(htmlTemplates.column);
@@ -49,10 +46,13 @@ async function addColumnButton(clickEvent) {
 
     let columnId = columnPromise[0][0].id;
     let column = await columnsHandler.getColumn(columnId)
+
+    await removeAddColumnElement(boardId);
     await columnManager.loadColumn(column[0], boardId);
 
-    columnTitleElement.value = ""
-
+    // columnTitleElement.value = ""
+    addAddColumnElement(boardId);
+    dragManager.initDragManager();
 }
 
 
@@ -78,5 +78,21 @@ async function updataColumnTilte(event) {
             await columnsHandler.updataColumn(columnId,newColumnTitle)
             columnElement.setAttribute("contenteditable", "false");
         }
+}
 
+async function addAddColumnElement(boardId) {
+    const columnBuilder = htmlFactory(htmlTemplates.addColumn);
+    const content = columnBuilder(boardId);
+    domManager.addChild(`#div-cards[data-board-id="${boardId}"]`, content);
+    domManager.addEventListener(
+        `[data-board-id="${boardId}"].add-column-button`,
+        "click",
+        addColumnButton
+    );
+    
+}
+
+async function removeAddColumnElement(boardId){
+    let addColumnElement = document.querySelector(`[data-board-id="${boardId}"].add-column-element`)
+    addColumnElement.remove()
 }

@@ -54,8 +54,6 @@ export let boardsManagerFunc = {
         let boardElement = document.querySelector(`.full-board[data-board-id="${boardId}"]`)
         boardElement.remove()
     
-        domManager.emptyElement('#root');
-        await boardsManager.loadBoards(null)
     },
     // Funkcja obsługująca zatwierdzanie edycji za pomocą klawisza Enter
     editBoardTilte: async function (event) {
@@ -81,5 +79,13 @@ export let boardsManagerFunc = {
         console.log(boardId)
         boardId.setAttribute("contenteditable", "true")
         boardId.focus()
+    },
+    getBoardAfterCreate: async function (boardResponse, userId) {
+        let boardPromise = await boardResponse;
+        console.log(boardPromise)
+        let boardId = boardPromise.id;
+        console.log(boardId)
+        let board = await boardsHandler.getBoard(boardId);
+        await boardsManager.loadBoard(board[0], userId);
     }
 }
