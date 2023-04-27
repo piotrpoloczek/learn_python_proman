@@ -6,7 +6,6 @@ import { userManager } from "./controller/userManager.js";
 function init() {
     userManager.checkIfUser();
     eventListeners.addGlobalEventListeners();
-    dragManager.initDragManager();
 }
 
 init();
